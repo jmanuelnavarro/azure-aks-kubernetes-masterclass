@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: myapp2-replicaset
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: myapp2 #Replicaset manages Pods matching label/app = myapp2
+  template: #Pod template, complete Pod definition (spec section)
+    metadata:
+      name: myapp2-pod
+      labels:
+        app: myapp2
+    spec:
+      containers: 
+        - name: myapp2-container
+          image: stacksimplify/kubenginx:1.0.0
+          ports:
+            - containerPort: 80

@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: mysql
+spec:
+  replicas: 1
+  strategy: 
+    type: Recreate #Recreate because only 1 Pod -> All the Pods are killed before creating new ones
+  selector:
+    matchLabels:
+      app: mysql #Pod select lablel. Must match Pod's labels
+  template:
+    metadata:
+      labels:
+        app: mysql #Pod labels. Must match Deployment matchLabels section
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:5.6
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: dbpassword11
+          ports:
+            - containerPort: 3306
+              name: mysql
+          volumeMounts: # Container level mount specification
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
+            - name: usermanagement-dbcreation-script
+              mountPath: /docker-entrypoint-initdb.d
+      volumes: #Volumes to be mounted on our Pod
+        - name: mysql-persistent-storage # Volume for data persistent storage
+          persistentVolumeClaim: 
+            claimName: azure-managed-disk-pvc
+        - name: usermanagement-dbcreation-script # Volume for user management db creation script
+          configMap:
+            name: usermanagement-dbcreation-script
