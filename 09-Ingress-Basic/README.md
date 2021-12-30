@@ -43,7 +43,7 @@ kubectl create namespace ingress-basic
 
 # Add the official stable repository
 helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+helm repo add stable https://kubernetes-charts.storage.googleapis.com/ (No longer available, use https://charts.helm.sh/stable)
 helm repo update
 
 #  Customizing the Chart Before Installing. 
@@ -57,6 +57,8 @@ helm install ingress-nginx ingress-nginx/ingress-nginx \
     --set defaultBackend.nodeSelector."beta\.kubernetes\.io/os"=linux \
     --set controller.service.externalTrafficPolicy=Local \
     --set controller.service.loadBalancerIP="REPLACE_STATIC_IP" 
+
+Note: Use ` instead of \ in Powershell
 
 # Replace Static IP captured in Step-02
 helm install ingress-nginx ingress-nginx/ingress-nginx \

@@ -1,16 +1,19 @@
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1 #chaged from v1beta1 to v1
 kind: Ingress
 metadata:
   name: nginxapp1-ingress-service
   annotations:
-    kubernetes.io/ingress.class: nginx  
+    kubernetes.io/ingress.class: nginx # Means we are going to use NGINX Ingress Controller 
 spec:  
   rules:
   - http:
       paths:
       - path: /
-        backend:
-          serviceName: app1-nginx-clusterip-service
-          servicePort: 80
+        pathType: Prefix # Added. pathType is needed in v1
+        backend: # Adapted to v1 format
+          service:
+            name: app1-nginx-clusterip-service
+            port:
+              number: 80
 
   
