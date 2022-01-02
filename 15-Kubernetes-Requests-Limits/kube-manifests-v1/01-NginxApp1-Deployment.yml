@@ -23,8 +23,8 @@ spec:
           # Requests & Limits   
           resources:
             requests:
-              cpu: "100m" 
-              memory: "128Mi"
+              cpu: "100m" # Milicores
+              memory: "128Mi" # Megabytes
             limits:
               cpu: "200m"
               memory: "256Mi"                     
