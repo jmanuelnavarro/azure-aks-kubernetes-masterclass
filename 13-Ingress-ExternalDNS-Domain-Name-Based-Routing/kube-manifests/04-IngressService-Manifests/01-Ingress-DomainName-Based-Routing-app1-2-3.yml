@@ -1,4 +1,4 @@
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-app1-app2-app3
@@ -10,21 +10,30 @@ spec:
     http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: app1-nginx-clusterip-service
-          servicePort: 80
+          service:
+            name: app1-nginx-clusterip-service
+            port:
+              number: 80
   - host: eapp2.kubeoncloud.com    
     http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: app2-nginx-clusterip-service
-          servicePort: 80  
+          service:
+            name: app2-nginx-clusterip-service
+            port:
+              number: 80  
   - host: eapp3.kubeoncloud.com    
     http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: usermgmt-webapp-clusterip-service
-          servicePort: 80                                  
+          service:
+            name: usermgmt-webapp-clusterip-service
+            port:
+              number: 80                                  
                      
